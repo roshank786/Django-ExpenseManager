@@ -24,5 +24,5 @@ urlpatterns = [
 
     path("category/add/",views.CategoryCreateView.as_view(),name="category-add"),
 
-    
+    path("category/<int:pk>/change/",views.CategoryEditView.as_view(),name="category-edit"),
 ]

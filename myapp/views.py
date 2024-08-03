@@ -38,3 +38,52 @@ class CategoryCreateView(View):
         else:
             
             return render(request,"category_add.html",{"form":form_instance})
+        
+
+
+# category/<int:pk>/change
+class CategoryEditView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        id = kwargs.get("pk")
+
+        category_object = Category.objects.get(id=id)
+
+        form_instances = CategoryForm(instance=category_object)
+
+        return render(request,"category_edit.html",{"form":form_instances})
+    
+
+
+    def post(self,request,*args,**kwargs):
+
+        # id = kwargs.get("pk")
+
+        # form_instances = CategoryForm(request.POST)
+
+        # if form_instances.is_valid():
+            
+        #     data = form_instances.cleaned_data
+
+        #     Category.objects.filter(id=id).update(**data)
+
+        #     return redirect("category-add")
+        # else:
+        #     return render(request,"category_edit.html",{"form":form_instances})
+        # old method for the same
+
+        id = kwargs.get("pk")
+
+        cat_obj = Category.objects.get(id=id)
+
+        form_instance = CategoryForm(request.POST,instance=cat_obj)
+
+        if form_instance.is_valid():
+
+            form_instance.save()
+
+            return redirect("category-add")
+        
+        else:
+            return render(request,"category_edit.html",{"form":form_instances})
