@@ -22,9 +22,9 @@ class Transactions(models.Model):
     category_object = models.ForeignKey(Category,on_delete=models.CASCADE)
 
     payment_options = (
-        ("Cash","cash"),
-        ("UPI","upi"),
-        ("Card","card")
+        ("cash","Cash"),
+        ("upi","UPI"),
+        ("card","Card")
     )
 
     payment_method = models.CharField(max_length=200,choices=payment_options,default="cash")

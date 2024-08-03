@@ -12,6 +12,7 @@ class CategoryCreateView(View):
 
     def get(self,request,*args,**kwargs):
 
+        
         form_instance = CategoryForm()
         
         qs = Category.objects.all()
@@ -98,3 +99,19 @@ class TransactionCreateView(View):
         form_instances = TransactionForm()
 
         return render(request,"transaction_add.html",{"form":form_instances})
+    
+
+    def post(self,request,*args,**kwargs):
+
+        form_instance = TransactionForm(request.POST)
+
+        if form_instance.is_valid():
+
+            form_instance.save()
+
+            return redirect("transaction-add")
+        else:
+            return render(request,"transaction_add.html",{"form":form_instances})
+        
+
+
