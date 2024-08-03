@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 
 from django.views.generic import View
 
-from myapp.forms import CategoryForm
+from myapp.forms import CategoryForm,TransactionForm
 
 from myapp.models import Category
 
@@ -87,3 +87,14 @@ class CategoryEditView(View):
         
         else:
             return render(request,"category_edit.html",{"form":form_instances})
+
+
+
+
+class TransactionCreateView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        form_instances = TransactionForm()
+
+        return render(request,"transaction_add.html",{"form":form_instances})
