@@ -30,5 +30,9 @@ urlpatterns = [
 
     path("transaction/<int:pk>/change/",views.TransactionUpdateView.as_view(),name="transaction-edit"),
 
-    path("transaction/<int:pk>/remove/",views.TransactionDeleteView.as_view(),name="transaction-delete")
+    path("transaction/<int:pk>/remove/",views.TransactionDeleteView.as_view(),name="transaction-delete"),
+
+    path("expense/summary/",views.ExpenseSummaryView.as_view(),name="summary"),
+
+    
 ]

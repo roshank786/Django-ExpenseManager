@@ -8,6 +8,8 @@ from myapp.models import Category,Transactions
 
 from django.utils import timezone
 
+from django.db.models import Sum,Avg
+
 
 
 class CategoryCreateView(View):
@@ -161,6 +163,7 @@ class TransactionUpdateView(View):
             return render(request,"transaction_edit.html",{"form":form_instance})
 
 
+
 class TransactionDeleteView(View):
 
     def get(self,request,*args,**kwargs):
@@ -170,3 +173,26 @@ class TransactionDeleteView(View):
         Transactions.objects.get(id=id).delete()
 
         return redirect("transaction-add")
+    
+
+
+
+class ExpenseSummaryView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        cur_year = timezone.now().year
+
+        cur_month = timezone.now().month
+
+        qs = Transactions.objects.filter(created_date__month = cur_month,
+                                         created_date__year = cur_year)
+
+        total_expense = qs.values("amount").aggregate(total = Sum("amount"))
+
+        print(total_expense)
+
+        return render(request,"expense_summary.html")
+    
+
+        
