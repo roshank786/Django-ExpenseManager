@@ -4,7 +4,9 @@ from django.views.generic import View
 
 from myapp.forms import CategoryForm,TransactionForm
 
-from myapp.models import Category
+from myapp.models import Category,Transactions
+
+from django.utils import timezone
 
 
 
@@ -98,7 +100,16 @@ class TransactionCreateView(View):
 
         form_instances = TransactionForm()
 
-        return render(request,"transaction_add.html",{"form":form_instances})
+        cur_year = timezone.now().year
+        # .year to take the current year
+
+        cur_month = timezone.now().month
+
+        qs = Transactions.objects.filter(created_date__month = cur_month,created_date__year = cur_year)
+
+        # created_date__month = to take only the month in the created_date
+
+        return render(request,"transaction_add.html",{"form":form_instances,"transactions":qs})
     
 
     def post(self,request,*args,**kwargs):
@@ -115,3 +126,47 @@ class TransactionCreateView(View):
         
 
 
+
+# url:lh:8000/transaction/<int:pk>/change/
+# method get,post
+
+class TransactionUpdateView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        id = kwargs.get("pk")
+
+        transaction_obj = Transactions.objects.get(id=id)
+
+        form_instance = TransactionForm(instance=transaction_obj)
+
+        return render(request,"transaction_edit.html",{"form":form_instance})
+        
+
+    def post(self,request,*args,**kwargs):
+
+        id = kwargs.get("pk")
+
+        transaction_obj = Transactions.objects.get(id=id)
+
+        form_instance = TransactionForm(request.POST,instance=transaction_obj)
+
+        if form_instance.is_valid():
+
+            form_instance.save()
+
+            return redirect("transaction-add")
+        
+        else:
+            return render(request,"transaction_edit.html",{"form":form_instance})
+
+
+class TransactionDeleteView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        id = kwargs.get("pk")
+
+        Transactions.objects.get(id=id).delete()
+
+        return redirect("transaction-add")

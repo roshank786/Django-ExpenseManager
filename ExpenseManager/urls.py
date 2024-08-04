@@ -28,5 +28,7 @@ urlpatterns = [
 
     path("transaction/add/",views.TransactionCreateView.as_view(),name="transaction-add"),
 
-    
+    path("transaction/<int:pk>/change/",views.TransactionUpdateView.as_view(),name="transaction-edit"),
+
+    path("transaction/<int:pk>/remove/",views.TransactionDeleteView.as_view(),name="transaction-delete")
 ]
