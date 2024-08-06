@@ -1,6 +1,10 @@
 from django import forms
+
 from myapp.models import Category,Transactions
+
 from django.contrib.auth.models import User
+
+from django.contrib.auth.forms import UserCreationForm
 
 class CategoryForm(forms.ModelForm):
 # if inherited from ModelForm then meta class is required
@@ -39,10 +43,10 @@ class TransactionForm(forms.ModelForm):
 
 
 
-class RegistrationForm(forms.ModelForm):
+class RegistrationForm(UserCreationForm):
 
     class Meta:
 
         model = User
 
-        fields = ["username","email","password"]
+        fields = ["username","email","password1","password2"]
