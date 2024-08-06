@@ -2,13 +2,15 @@ from django.shortcuts import render,redirect
 
 from django.views.generic import View
 
-from myapp.forms import CategoryForm,TransactionForm
+from myapp.forms import CategoryForm,TransactionForm,RegistrationForm
 
 from myapp.models import Category,Transactions
 
 from django.utils import timezone
 
 from django.db.models import Sum,Avg
+
+from django.contrib.auth import authenticate,login,logout
 
 
 
@@ -190,9 +192,62 @@ class ExpenseSummaryView(View):
 
         total_expense = qs.values("amount").aggregate(total = Sum("amount"))
 
-        print(total_expense)
+        print(total_expense) # {'total': 320}
 
-        return render(request,"expense_summary.html")
+        data = {
+            "total_expense":total_expense.get("total")
+        }
+
+        return render(request,"expense_summary.html",data)
     
 
+
+        #######################################################
+
         
+
+class SignUpView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        form_instance = RegistrationForm()
+
+        return render(request,"register.html",{"form":form_instance})
+
+        
+
+
+        #######################################################
+
+# class SignInView(View):
+
+#     def get(self,request,*args,**kwargs):
+
+#         return render(request,"signin.html",{"form":form_instance})
+
+#     def post(self,request,*args,**kwargs):
+
+#         form_instance = LoginForm(request.POST)
+
+#         if form_instance.is_valid():
+
+#             data = form_instance.cleaned_data #("username":"django","password":"Password@123")
+
+#             user_obj = authenticate(request,**data)
+
+#             if user_obj:
+
+#                 login(request,user_obj)
+
+#                 return redirect("summary")
+        
+#         return render(request,"signin.html",{"form":form_instance})
+    
+
+class SignOutView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        logout(request)
+
+        return redirect("signin")

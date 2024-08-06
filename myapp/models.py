@@ -36,3 +36,7 @@ class Transactions(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+# 'user' model is already is an inbuilt feature which is in the 'models.py' of the application 'django.contrib.auth' 
+# go to forms to see the direct importing there

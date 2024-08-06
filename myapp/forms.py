@@ -1,8 +1,9 @@
 from django import forms
 from myapp.models import Category,Transactions
+from django.contrib.auth.models import User
 
 class CategoryForm(forms.ModelForm):
-
+# if inherited from ModelForm then meta class is required
     class Meta:
 
         model = Category
@@ -34,3 +35,14 @@ class TransactionForm(forms.ModelForm):
             "payment_method":forms.Select(attrs={"class":"form-control form-select"}),
             "user":forms.TextInput(attrs={"class":"form-control"})
         }
+
+
+
+
+class RegistrationForm(forms.Form):
+
+    class Meta:
+
+        model = User
+
+        fields = ["username","email","password"]

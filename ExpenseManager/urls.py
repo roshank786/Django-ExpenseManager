@@ -35,4 +35,15 @@ urlpatterns = [
     path("expense/summary/",views.ExpenseSummaryView.as_view(),name="summary"),
 
     
+    
+    
+    path("register/",views.SignUpView.as_view(),name="signup"),
+
+
+    
+
+
+    path("signout/",views.SignOutView.as_view(),name="signout"),
+
+    
 ]
