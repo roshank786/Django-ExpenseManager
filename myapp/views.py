@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 
 from django.views.generic import View
 
-from myapp.forms import CategoryForm,TransactionForm,RegistrationForm
+from myapp.forms import CategoryForm,TransactionForm,RegistrationForm,LoginForm
 
 from myapp.models import Category,Transactions
 
@@ -202,7 +202,7 @@ class ExpenseSummaryView(View):
     
 
 
-        #######################################################
+        
 
         
 
@@ -235,15 +235,15 @@ class SignUpView(View):
 
 
         
+     
 
+class SignInView(View):
 
-        #######################################################
+    def get(self,request,*args,**kwargs):
 
-# class SignInView(View):
+        form_instance = LoginForm()
 
-#     def get(self,request,*args,**kwargs):
-
-#         return render(request,"signin.html",{"form":form_instance})
+        return render(request,"signin.html",{"form":form_instance})
 
 #     def post(self,request,*args,**kwargs):
 
