@@ -39,7 +39,7 @@ class TransactionForm(forms.ModelForm):
 
 
 
-class RegistrationForm(forms.Form):
+class RegistrationForm(forms.ModelForm):
 
     class Meta:
 

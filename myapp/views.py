@@ -213,6 +213,26 @@ class SignUpView(View):
         form_instance = RegistrationForm()
 
         return render(request,"register.html",{"form":form_instance})
+    
+
+    def post(self,request,*args,**kwargs):
+
+        form_instance = RegistrationForm(request.POST)
+
+        if form_instance.is_valid():
+
+            form_instance.save()
+
+            print("Account created succesfully")
+
+            return redirect("signup")
+        
+        else:
+
+            print("Failed to create account")
+
+            return render(request,"register.html",{"form":form_instance})
+
 
         
 
