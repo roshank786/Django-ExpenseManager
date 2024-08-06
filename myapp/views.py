@@ -245,23 +245,23 @@ class SignInView(View):
 
         return render(request,"signin.html",{"form":form_instance})
 
-#     def post(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs):
 
-#         form_instance = LoginForm(request.POST)
+        form_instance = LoginForm(request.POST)
 
-#         if form_instance.is_valid():
+        if form_instance.is_valid():
 
-#             data = form_instance.cleaned_data #("username":"django","password":"Password@123")
+            data = form_instance.cleaned_data #("username":"django","password":"Password@123")
 
-#             user_obj = authenticate(request,**data)
+            user_obj = authenticate(request,**data)
 
-#             if user_obj:
+            if user_obj:
 
-#                 login(request,user_obj)
+                login(request,user_obj)
 
-#                 return redirect("summary")
+                return redirect("summary")
         
-#         return render(request,"signin.html",{"form":form_instance})
+        return render(request,"signin.html",{"form":form_instance})
     
 
 class SignOutView(View):

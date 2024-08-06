@@ -41,10 +41,6 @@ urlpatterns = [
 
     path("signin/",views.SignInView.as_view(),name="signin"),
 
-
-    
-
-
     path("signout/",views.SignOutView.as_view(),name="signout"),
 
     
