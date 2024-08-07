@@ -1,5 +1,6 @@
 from django.db import models
 
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -8,7 +9,7 @@ class Category(models.Model):
     
     name = models.CharField(max_length=25)
     budget = models.PositiveIntegerField()
-    owner = models.CharField(max_length=100)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
 
 
     def __str__(self):
@@ -30,7 +31,7 @@ class Transactions(models.Model):
     payment_method = models.CharField(max_length=200,choices=payment_options,default="cash")
 
     created_date = models.DateTimeField(auto_now_add=True)
-    user = models.CharField(max_length=200)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
 
 
 

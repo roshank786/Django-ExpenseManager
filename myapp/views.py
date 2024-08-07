@@ -259,7 +259,7 @@ class SignInView(View):
 
                 login(request,user_obj)
 
-                return redirect("summary")
+                return redirect("transaction-add")
         
         return render(request,"signin.html",{"form":form_instance})
     
