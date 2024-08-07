@@ -30,7 +30,7 @@ class TransactionForm(forms.ModelForm):
 
         model = Transactions
 
-        fields = ["title","amount","category_object","payment_method","user"]
+        fields = ["title","amount","category_object","payment_method","owner"]
 
         widgets = {
             "title":forms.TextInput(attrs={"class":"form-control"}),
@@ -51,9 +51,21 @@ class RegistrationForm(UserCreationForm):
 
         fields = ["username","email","password1","password2"]
 
+        widgets = {
+        "username":forms.TextInput(attrs={"class":"form-control"}),
+        "email":forms.TextInput(attrs={"class":"form-control"}),
+        "password1":forms.TextInput(attrs={"class":"form-control"}),
+        "password2":forms.TextInput(attrs={"class":"form-control"})
+    }
+
 
 class LoginForm(forms.Form):
 
     username = forms.CharField()
 
     password = forms.CharField()
+
+    widgets = {
+        "username":forms.TextInput(attrs={"class":"form-control"}),
+        "password":forms.TextInput(attrs={"class":"form-control"})
+    }

@@ -225,7 +225,7 @@ class SignUpView(View):
 
             print("Account created succesfully")
 
-            return redirect("signup")
+            return redirect("signin")
         
         else:
 

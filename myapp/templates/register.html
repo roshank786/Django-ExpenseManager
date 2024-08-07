@@ -8,14 +8,16 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container p-5">
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-8">
+            <div class="col-8 p-3 border rounded shadow">
+                <h3>Register</h3>
                 <form action="" method="post">
                     {%csrf_token%}
                     {{form}}
                     <button type="submit">Register</button>
+                    Already a User? <a href="{%url 'signin'%}">Sign In</a>
                 </form>
             </div>
             <div class="col-2"></div>
