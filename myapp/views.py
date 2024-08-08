@@ -21,7 +21,7 @@ class CategoryCreateView(View):
         
         form_instance = CategoryForm()
         
-        qs = Category.objects.all()
+        qs = Category.objects.filter(owner = request.user)
         # categories to view in the same add page
 
         return render(request,"category_add.html",{"form":form_instance,"categories":qs})
@@ -34,13 +34,33 @@ class CategoryCreateView(View):
 
         if form_instance.is_valid():
 
-            form_instance.save()
+            form_instance.instance.owner = request.user
+            # to take the logged in user to the owner details
+
+            cat_name = form_instance.cleaned_data.get("name")
+
+            user_obj = request.user
+
+            is_exist = Category.objects.filter(name__iexact = cat_name , owner = user_obj).exists()
+
+            if is_exist:
+
+                print("already exists !!!!!")
+
+                return render(request,"category_add.html",{"form":form_instance,"message":"Category already exists !!!"})
             
-            # data = form_instance.cleaned_data
+            else:
 
-            # Category.objects.create(**data)
 
-            return redirect("category-add")
+                form_instance.save()
+
+                # OR
+
+                # data = form_instance.cleaned_data
+
+                # Category.objects.create(**data)
+
+                return redirect("category-add")
         
         else:
             
@@ -109,11 +129,14 @@ class TransactionCreateView(View):
 
         cur_month = timezone.now().month
 
-        qs = Transactions.objects.filter(created_date__month = cur_month,created_date__year = cur_year)
+        qs = Transactions.objects.filter(created_date__month = cur_month,created_date__year = cur_year,owner=request.user)
 
         # created_date__month = to take only the month in the created_date
 
-        return render(request,"transaction_add.html",{"form":form_instances,"transactions":qs})
+        categories = Category.objects.filter(owner=request.user)
+        # taking all data in the category of the logged in user
+
+        return render(request,"transaction_add.html",{"form":form_instances,"transactions":qs,"categories":categories})
     
 
     def post(self,request,*args,**kwargs):
@@ -122,11 +145,13 @@ class TransactionCreateView(View):
 
         if form_instance.is_valid():
 
+            form_instance.instance.owner=request.user
+
             form_instance.save()
 
             return redirect("transaction-add")
         else:
-            return render(request,"transaction_add.html",{"form":form_instances})
+            return render(request,"transaction_add.html",{"form":form_instance})
         
 
 
@@ -259,7 +284,7 @@ class SignInView(View):
 
                 login(request,user_obj)
 
-                return redirect("transaction-add")
+                return redirect("category-add")
         
         return render(request,"signin.html",{"form":form_instance})
     
