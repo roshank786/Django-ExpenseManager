@@ -37,30 +37,16 @@ class CategoryCreateView(View):
             form_instance.instance.owner = request.user
             # to take the logged in user to the owner details
 
-            cat_name = form_instance.cleaned_data.get("name")
 
-            user_obj = request.user
+            form_instance.save()
 
-            is_exist = Category.objects.filter(name__iexact = cat_name , owner = user_obj).exists()
+            # OR
 
-            if is_exist:
+            # data = form_instance.cleaned_data
 
-                print("already exists !!!!!")
+            # Category.objects.create(**data)
 
-                return render(request,"category_add.html",{"form":form_instance,"message":"Category already exists !!!"})
-            
-            else:
-
-
-                form_instance.save()
-
-                # OR
-
-                # data = form_instance.cleaned_data
-
-                # Category.objects.create(**data)
-
-                return redirect("category-add")
+            return redirect("category-add")
         
         else:
             

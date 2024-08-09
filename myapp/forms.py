@@ -48,6 +48,16 @@ class CategoryForm(forms.ModelForm):
 
             self.add_error("budget","Amount should be min of 150")
 
+        category_name = self.cleaned_data.get("name")
+
+        owner = self.user
+
+        is_exist = Category.objects.filter(name__iexact = category_name,owner=owner).exists()
+
+        if is_exist:
+
+            self.add_error("name","Category already exists !!!")
+
         return self.cleaned_data
 
 
