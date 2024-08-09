@@ -19,7 +19,7 @@ class CategoryCreateView(View):
     def get(self,request,*args,**kwargs):
 
         
-        form_instance = CategoryForm()
+        form_instance = CategoryForm(user = request.user)
         
         qs = Category.objects.filter(owner = request.user)
         # categories to view in the same add page
@@ -30,7 +30,7 @@ class CategoryCreateView(View):
     
     def post(self,request,*args,**kwargs):
 
-        form_instance = CategoryForm(request.POST)
+        form_instance = CategoryForm(request.POST,user = request.user)
 
         if form_instance.is_valid():
 
@@ -141,7 +141,7 @@ class TransactionCreateView(View):
 
     def post(self,request,*args,**kwargs):
 
-        form_instance = TransactionForm(request.POST)
+        form_instance = TransactionForm(request.POS)
 
         if form_instance.is_valid():
 
