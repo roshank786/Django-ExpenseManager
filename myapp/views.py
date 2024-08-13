@@ -19,7 +19,12 @@ class CategoryCreateView(View):
 
     def get(self,request,*args,**kwargs):
 
-        
+        if not request.user.is_authenticated:
+
+            messages.error(request,"Invalid session")
+            
+            return redirect("signin")
+
         form_instance = CategoryForm(user = request.user)
         
         qs = Category.objects.filter(owner = request.user)
@@ -30,6 +35,12 @@ class CategoryCreateView(View):
     
     
     def post(self,request,*args,**kwargs):
+
+        if not request.user.is_authenticated:
+
+            messages.error(request,"Invalid session")
+            
+            return redirect("signin")
 
         form_instance = CategoryForm(request.POST,user = request.user)
 
