@@ -23,12 +23,14 @@
                     <th>Category Name</th>
                     <th>Budget</th>
                     <th>Owner</th>
+                    <th>Images</th>
                     <th>Action</th>
                 </tr>
                 {%for cat in categories%}
                 <tr>
                     <td>{{cat.name}}</td>
                     <td>{{cat.budget}}</td>
+                    <td><img src="{{cat.image.url}}" alt="" width="70px" height="70px"></td>
                     <td>{{cat.owner}}</td>
                     <td>
                         <a href="{%url 'category-edit' cat.id%}" class="btn btn-outline-warning">Edit</a>

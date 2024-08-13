@@ -221,7 +221,8 @@ class ExpenseSummaryView(View):
         cur_month = timezone.now().month
 
         qs = Transactions.objects.filter(created_date__month = cur_month,
-                                         created_date__year = cur_year)
+                                         created_date__year = cur_year,
+                                         owner = request.user)
 
         total_expense = qs.values("amount").aggregate(total = Sum("amount"))
 

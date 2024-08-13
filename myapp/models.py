@@ -10,7 +10,7 @@ class Category(models.Model):
     name = models.CharField(max_length=25)
     budget = models.PositiveIntegerField()
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="cat_images",default="default.jpg")
+    image = models.ImageField(upload_to="cat_images",default="cat_images\default.jpg")
 
 
     class Meta:
