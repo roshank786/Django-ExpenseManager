@@ -23,14 +23,15 @@ class CategoryForm(forms.ModelForm):
 
         model = Category
 
-        fields = ["name","budget"]
+        fields = ["name","budget","image"]
 
         # in this method we dont need to give the fields separately
         # like name = models.charfield()
 
         widgets = {
             "name":forms.TextInput(attrs={"class":"form-control"}),
-            "budget":forms.NumberInput(attrs={"class":"form-control"})
+            "budget":forms.NumberInput(attrs={"class":"form-control"}),
+            "image":forms.FileInput(attrs={"class":"form-control"})
         }
         # widgets for styling the form
         

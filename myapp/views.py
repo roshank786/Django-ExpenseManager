@@ -48,7 +48,7 @@ class CategoryCreateView(View):
             
             return redirect("signin")
 
-        form_instance = CategoryForm(request.POST,user = request.user)
+        form_instance = CategoryForm(request.POST,user = request.user,files=request.FILES)
 
         if form_instance.is_valid():
 
