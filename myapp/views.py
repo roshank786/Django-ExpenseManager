@@ -12,6 +12,7 @@ from django.db.models import Sum,Avg
 
 from django.contrib.auth import authenticate,login,logout
 
+from django.contrib import messages
 
 
 class CategoryCreateView(View):
@@ -63,7 +64,7 @@ class CategoryEditView(View):
 
         category_object = Category.objects.get(id=id)
 
-        form_instances = CategoryForm(instance=category_object)
+        form_instances = CategoryForm(instance=category_object,user=request.user)
 
         return render(request,"category_edit.html",{"form":form_instances})
     
@@ -90,7 +91,7 @@ class CategoryEditView(View):
 
         cat_obj = Category.objects.get(id=id)
 
-        form_instance = CategoryForm(request.POST,instance=cat_obj)
+        form_instance = CategoryForm(request.POST,instance=cat_obj,user=request.user)
 
         if form_instance.is_valid():
 
@@ -99,7 +100,7 @@ class CategoryEditView(View):
             return redirect("category-add")
         
         else:
-            return render(request,"category_edit.html",{"form":form_instances})
+            return render(request,"category_edit.html",{"form":form_instance})
 
 
 
@@ -236,11 +237,15 @@ class SignUpView(View):
 
             print("Account created succesfully")
 
+            messages.success(request,"Account created successfully")
+
             return redirect("signin")
         
         else:
 
             print("Failed to create account")
+
+            messages.error(request,"Failed to create account")
 
             return render(request,"register.html",{"form":form_instance})
 
@@ -270,7 +275,11 @@ class SignInView(View):
 
                 login(request,user_obj)
 
+                messages.success(request,"Signed in successfully")
+
                 return redirect("category-add")
+            
+            messages.error(request,"Sign in failed")
         
         return render(request,"signin.html",{"form":form_instance})
     
