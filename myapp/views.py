@@ -14,6 +14,12 @@ from django.contrib.auth import authenticate,login,logout
 
 from django.contrib import messages
 
+from myapp.decorators import signin_required
+
+from django.utils.decorators import method_decorator
+
+
+
 
 class CategoryCreateView(View):
 
@@ -67,6 +73,7 @@ class CategoryCreateView(View):
 
 
 # category/<int:pk>/change
+@method_decorator(signin_required,name="dispatch")
 class CategoryEditView(View):
 
     def get(self,request,*args,**kwargs):
@@ -116,6 +123,7 @@ class CategoryEditView(View):
 
 
 
+@method_decorator(signin_required,name="dispatch")
 class TransactionCreateView(View):
 
     def get(self,request,*args,**kwargs):
@@ -157,6 +165,7 @@ class TransactionCreateView(View):
 # url:lh:8000/transaction/<int:pk>/change/
 # method get,post
 
+@method_decorator(signin_required,name="dispatch")
 class TransactionUpdateView(View):
 
     def get(self,request,*args,**kwargs):
@@ -189,6 +198,7 @@ class TransactionUpdateView(View):
 
 
 
+@method_decorator(signin_required,name="dispatch")
 class TransactionDeleteView(View):
 
     def get(self,request,*args,**kwargs):
@@ -201,7 +211,7 @@ class TransactionDeleteView(View):
     
 
 
-
+@method_decorator(signin_required,name="dispatch")
 class ExpenseSummaryView(View):
 
     def get(self,request,*args,**kwargs):
@@ -294,7 +304,7 @@ class SignInView(View):
         
         return render(request,"signin.html",{"form":form_instance})
     
-
+@method_decorator(signin_required,name="dispatch")
 class SignOutView(View):
 
     def get(self,request,*args,**kwargs):

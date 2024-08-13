@@ -15,3 +15,7 @@ def signin_required(fn):
             return fn(request,*args,**kwargs)
         
     return wrapper
+
+# this is a function decorator 
+# we need to convert this into method decorator using in built django method_decorator
+# @method_decorator(signin_decorator,name="dispatch")
