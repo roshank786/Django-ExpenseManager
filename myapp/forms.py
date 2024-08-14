@@ -53,12 +53,22 @@ class CategoryForm(forms.ModelForm):
 
         owner = self.user
 
-        is_exist = Category.objects.filter(name__iexact = category_name,owner=owner).exists()
+        if not self.instance.pk:
+            # create block
+            is_exist = Category.objects.filter(name__iexact = category_name,owner=owner).exists()
 
-        if is_exist:
+            if is_exist:
 
-            self.add_error("name","Category already exists !!!")
+                self.add_error("name","Category already exists !!!")
+        else:
+            # edit block
+            is_exist = Category.objects.filter(name__iexact = category_name,owner=owner).exclude(pk = self.instance.pk).exists()
 
+            if is_exist:
+
+                self.add_error("name","Category already exists !!!")
+
+                
         return self.cleaned_data
 
 
